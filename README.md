@@ -1,3 +1,5 @@
+Trabajo Práctico Nro. 2 (2026) - Requerimientos con SDD
+
 Participantes: Mendez Carla,
                Avellaneda Marian	 
 
