@@ -1,4 +1,4 @@
-Participantes: Mendez Carla	
+Participantes: Mendez Carla,
                Avellaneda Marian	 
 
 Descripción del Proyecto :
