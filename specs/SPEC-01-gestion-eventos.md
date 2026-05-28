@@ -76,6 +76,9 @@ Este módulo es fundamental porque:
 - Dado que el evento está "en_curso", entonces solo puedo modificar descripción e imagen
 - Dado que el evento está "finalizado", entonces no puedo modificar ningún campo
 - Dado que guardo los cambios exitosamente, entonces veo los datos actualizados
+ [OWASP - Validación de Entrada] Dado que edito el título o la descripción del evento, entonces el sistema sanitiza estrictamente la entrada de datos, bloqueando o escapando cualquier etiqueta HTML (<script>, <iframe>) antes de guardar la información en la base de datos para prevenir ataques XSS.
+
+[OWASP - Límite de carga] Dado que intento subir una nueva imagen para el evento, entonces el sistema valida en el backend que el archivo sea estrictamente un formato de imagen permitido y no supere los 2MB de tamaño, previniendo la carga de ejecutables maliciosos.
 
 ### HU-05: Publicar Evento
 **Como** organizador de un evento  
