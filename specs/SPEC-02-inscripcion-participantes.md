@@ -27,17 +27,15 @@ Una vez que los eventos están creados y publicados (SPEC-01), los usuarios nece
 
 ### HU-01: Auto-inscripción a Evento
 **Como** usuario registrado  
-**Quiero** inscribirme a un evento publicado  
-**Para** participar como asistente  
+**Quiero** inscribirme a un evento publicado de forma segura 
+**Para** participar como asistente sin que mi identidad sea manipulada ni se alteren los cupos del evento de forma fraudulenta.
 
 **Criterios de Aceptación:**
-- Dado que estoy autenticado y veo un evento publicado, entonces veo un botón "Inscribirme" si la inscripción está abierta
-- Dado que la inscripción está cerrada (fuera de fechas), entonces veo un mensaje "Inscripción cerrada" en lugar del botón
-- Dado que el evento alcanzó su cupo máximo, entonces veo un mensaje "Cupo lleno" y no puedo inscribirme
-- Dado que me inscribo exitosamente, entonces recibo una confirmación y mi estado es "pendiente"
-- Dado que ya estoy inscrito al evento, entonces veo "Ya inscrito" en lugar del botón de inscripción
-- Dado que me inscribo como participante, entonces mi rol por defecto es "participante"
-- Dado que el evento requiere confirmación del organizador, entonces mi inscripción queda en estado "pendiente" hasta ser confirmada
+- Dado que estoy autenticado y veo un evento publicado, entonces veo un botón "Inscribirme" si la inscripción está abierta, y toda petición enviada al backend requerirá   validación estricta de origen para prevenir ataques de falsificación de peticiones (CSRF).
+- Dado que me inscribo al evento, entonces el backend validará que el ID de usuario a inscribir coincida estrictamente con la identidad validada en el token de sesión (JWT), evitando vulnerabilidades de Control de Acceso Roto (OWASP A01:2021) donde un atacante podría inscribir a terceros manipulando la API.
+- Dado que el evento alcanzó su cupo máximo, entonces veo un mensaje "Cupo lleno" y no puedo inscribirme. El sistema debe implementar una transacción atómica al momento de registrar la inscripción para evitar "condiciones de carrera" (Race Conditions) si múltiples usuarios intentan acceder al último cupo simultáneamente (Control Arquitectónico de Performance/Seguridad).
+- Dado que la inscripción está cerrada (fuera de fechas), entonces veo un mensaje "Inscripción cerrada" en lugar del botón, y cualquier intento directo de forzar el registro mediante llamadas directas a la API será interceptado y rechazado de forma segura (OWASP C3: Validación de entradas).
+- Dado que me inscribo exitosamente, entonces recibo una confirmación y mi estado es "pendiente".
 
 ### HU-02: Cancelar Inscripción
 **Como** participante inscrito  
